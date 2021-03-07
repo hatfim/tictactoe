@@ -1,10 +1,14 @@
-# tictactoe
+# Tic-Tac-Toe
 
-> TicTacToe FWD
+Tic-Tac-Toe game written in vue using vuex to store state.
+
+## Get Started
+
+You'd better have `node >=10` and `npm >=6` installed:
 
 ## Build Setup
 
-``` bash
+```bash
 # install dependencies
 npm install
 
@@ -15,4 +19,19 @@ npm run dev
 npm run build
 ```
 
-For detailed explanation on how things work, consult the [docs for vue-loader](http://vuejs.github.io/vue-loader).
+## Folder Structure
+
+```bash
+├── dist                    # directory which contains all bundled files
+│    ├── build.js           # bundle js files
+│    └── build.js.map       # bundle js map files
+├── src                     # source code file
+│    ├── components         # All the components of the projects that are not the main views
+│    └── store              # directory which contains vuex file like state, actions or mutations
+│    └── App.vue            # main app views files
+│    └── main.js            #  main js files
+├── index.html              # main index.html
+├── node_modules            # dependencies
+└── package.json            # package info
+└── webpack.config.json     # webppack config
+```
