@@ -50,28 +50,13 @@ export default {
     position: relative;
     display: flex;
     justify-content: center;
-    width: 100%;
-    height: 100%;
     align-items: center;
     font-size: 7vmin;
     font-weight: bold;
     text-align: center;
     background: #171717;
     color: white;
-    border: 2px solid #464646;
-
-    &:nth-child(3n) {
-      margin-left: -4px;
-    }
-    &:nth-child(3n + 2) {
-      margin-left: -2px;
-    }
-    &:nth-child(n + 4) {
-      margin-top: -2px;
-    }
-    &:nth-child(n + 7) {
-      margin-top: -4px;
-    }
+    border: 1px solid #464646;
 
     &[data-value="x"] {
       &::before {
@@ -105,7 +90,7 @@ export default {
     &.-is-winning {
       position: relative;
       z-index: 1;
-      background-color: #171717;
+      background-color: #ffcc33;
       border-color: #ffcc33;
     }
   }

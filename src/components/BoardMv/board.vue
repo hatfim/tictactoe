@@ -1,6 +1,7 @@
 <template>
   <div
     class="game__board"
+    :style="cssVars"
     :class="[
       tie ? '-tie' : ''
     ]"
@@ -19,7 +20,7 @@
 <script>
 import { mapState } from 'vuex';
 import { SET_BASE_STATE } from '../../store/mutations';
-import { WINNING_STATES, PLAYER_X, PLAYER_O } from '../../store/constants';
+import { PLAYER_X, PLAYER_O } from '../../store/constants';
 
 import Cell from '../CellAv';
 
@@ -28,18 +29,23 @@ export default {
     Cell,
   },
   computed: {
-    ...mapState(['grid', 'playerTurn', 'turnCounter', 'winningCells', 'tie']),
+    ...mapState(['grid', 'playerTurn', 'turnCounter', 'winningCells', 'tie', 'boardSize', 'winningState']),
+    cssVars() {
+      return {
+        '--col': this.boardSize,
+      }
+    }
   },
   methods: {
     calculateWinner(grid, turn) {
-      for (const win_state of WINNING_STATES) {
+      for (const win_state of this.winningState) {
         const winCells = [];
         for (const cell of win_state) {
           if (grid[cell] === turn) {
             winCells.push(cell);
           }
         }
-        if (winCells.length === 3) {
+        if (winCells.length === this.boardSize) {
           return { winner: turn, winningCells: winCells };
         }
       }
@@ -57,7 +63,7 @@ export default {
         this.$store.commit(SET_BASE_STATE, { name: 'winningCells', payload: winningCells_ });
       } else {
         this.$store.commit(SET_BASE_STATE, { name: 'turnCounter', payload: this.turnCounter + 1 });
-        if (this.turnCounter === 10) {
+        if (this.turnCounter > this.grid.length) {
           this.$store.commit(SET_BASE_STATE, { name: 'tie', payload: true });
         } else {
           const player = this.playerTurn === PLAYER_X ? PLAYER_O : PLAYER_X;
@@ -72,12 +78,10 @@ export default {
 <style lang="scss" scoped>
   .game__board {
     display: grid;
-    grid-template-rows: repeat(3, 1fr);
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(var(--col), 150px);
+    grid-template-columns: repeat(var(--col), 150px);
+    grid-gap:2px;
     flex-direction: column;
-    width: 50vmin;
-    height: 50vmin;
-    padding: 4px;
 
     &.-tie {
       opacity: 0.2;
